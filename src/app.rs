@@ -3,9 +3,9 @@
 use rand::seq::SliceRandom;
 use yew::prelude::*;
 use crate::data::{replacements, wordlist};
-use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
-use wasm_bindgen::JsCast;
+use wasm_bindgen::{JsCast, JsValue};
+use gloo_console::log;
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -13,29 +13,34 @@ pub fn app() -> Html {
     let user_input = use_state(|| "".to_string()); // State for user input
     let transformed_output = use_state(|| "".to_string()); // State for transformed output
     let wordlist_state = use_state(|| Vec::new()); // State for the wordlist
+    let is_wordlist_loaded = use_state(|| false); // State to track if wordlist is loaded
 
-    {
+    // Callback to load the wordlist when the button is pressed
+    let load_wordlist = {
         let wordlist_state = wordlist_state.clone();
-        use_effect(move || {
-            // Spawn a local task to fetch the wordlist asynchronously
-            spawn_local(async move {
-                match wordlist::get_wordlist().await {
-                    Ok(words) => wordlist_state.set(words),
-                    Err(err) => {
-                        log::error!("Error fetching wordlist: {:?}", err);
-                        // Optionally set a default wordlist or handle the error
-                        wordlist_state.set(vec![
-                            "default".to_string(),
-                            "wordlist".to_string(),
-                            "fallback".to_string(),
-                        ]);
-                    }
-                }
-            });
-            // No cleanup necessary
-            || ()
-        });
-    }
+        let is_wordlist_loaded = is_wordlist_loaded.clone();
+        Callback::from(move |_| {
+            log!("Loading wordlist...");
+
+            match wordlist::get_wordlist() {
+                Ok(words) => {
+                    wordlist_state.set(words);
+                    is_wordlist_loaded.set(true);
+                    log!("Wordlist successfully loaded and set.");
+                },
+                Err(err) => {
+                    log!("Error fetching wordlist: ", &JsValue::from_str(&err.to_string()));
+                    // Optionally set a default wordlist or handle the error
+                    wordlist_state.set(vec![
+                        "default".to_string(),
+                        "wordlist".to_string(),
+                        "fallback".to_string(),
+                    ]);
+                    is_wordlist_loaded.set(true); // Considered loaded even if set to default
+                },
+            }
+        })
+    };
 
     // Function to generate randomized song titles
     let generate_titles = {
@@ -44,7 +49,7 @@ pub fn app() -> Html {
         Callback::from(move |_| {
             let wordlist = (*wordlist).clone();
             if wordlist.is_empty() {
-                log::warn!("Wordlist is empty. Cannot generate song titles.");
+                log!("Wordlist is empty. Cannot generate song titles.");
                 return;
             }
 
@@ -90,7 +95,7 @@ pub fn app() -> Html {
             // Append random word from the wordlist
             let wordlist = (*wordlist).clone();
             if wordlist.is_empty() {
-                log::warn!("Wordlist is empty. Cannot append random suffix.");
+                log!("Wordlist is empty. Cannot append random suffix.");
                 transformed_output.set(transformed.clone());
                 return;
             }
@@ -105,10 +110,21 @@ pub fn app() -> Html {
     html! {
         <main>
             <h1>{ "V/Vm-ifier with Dynamic Wordlist" }</h1>
-            <button onclick={generate_titles}>{ "Generate Randomized Song Titles" }</button>
+            
+            // Button to load the wordlist
+            <button onclick={load_wordlist.clone()} disabled={*is_wordlist_loaded}>
+                { if *is_wordlist_loaded { "Wordlist Loaded" } else { "Load Wordlist" } }
+            </button>
+            
+            // Button to generate song titles, disabled until wordlist is loaded
+            <button onclick={generate_titles} disabled={!*is_wordlist_loaded}>
+                { "Generate Randomized Song Titles" }
+            </button>
+            
             <ul>
                 { for (*song_titles).iter().map(|title| html! { <li>{ title }</li> }) }
             </ul>
+            
             <input
                 type="text"
                 placeholder="Enter text to V/Vm-ify"
