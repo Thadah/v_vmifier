@@ -1,14 +1,13 @@
-use gloo::storage::{Storage, LocalStorage};
-use std::error::Error;
+use gloo::storage::{LocalStorage, Storage};
 use gloo_console::log;
+use gloo_net::http::Request;
+use std::error::Error;
 
 const WORDLIST_KEY: &str = "cached_wordlist";
+const WORDLIST_URL: &str = "https://raw.githubusercontent.com/kkrypt0nn/wordlists/main/wordlists/languages/english.txt";
 
-// Embed the contents of 'english.txt' at compile time
-const ENGLISH_TXT: &str = include_str!("../../english.txt");
-
-/// Retrieve the wordlist from localStorage or use the embedded 'english.txt'.
-pub fn get_wordlist() -> Result<Vec<String>, Box<dyn Error>> {
+/// Retrieve the wordlist from localStorage or fetch from the URL.
+pub async fn get_wordlist() -> Result<Vec<String>, Box<dyn Error>> {
     log!("get_wordlist start");
 
     // Attempt to retrieve the wordlist from localStorage
@@ -17,10 +16,19 @@ pub fn get_wordlist() -> Result<Vec<String>, Box<dyn Error>> {
         return Ok(cached);
     }
 
-    log!("Wordlist not found in cache. Using embedded 'english.txt'.");
+    log!("Wordlist not found in cache. Fetching from URL.");
 
-    // Process the embedded 'english.txt' content
-    let words: Vec<String> = ENGLISH_TXT
+    // Fetch the wordlist from the URL
+    let response = Request::get(WORDLIST_URL).send().await?;
+
+    if !response.ok() {
+        return Err(format!("Failed to fetch wordlist. Status: {}", response.status()).into());
+    }
+
+    let text = response.text().await?;
+
+    // Process the wordlist content
+    let words: Vec<String> = text
         .lines()
         .map(|line| line.trim().to_string())
         .filter(|line| !line.is_empty())
