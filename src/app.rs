@@ -111,6 +111,14 @@ pub fn app() -> Html {
                 <div id="left-text">
                     <p class="text-white">{ "V/Vm Test Records : Made In Northern England." }</p>
                 </div>
+                <div id="images">
+                    <img src="images/belce.png" alt="Belce the Cat" />
+                    <img src="images/zuibaku.png" alt="It's just a bomb" />
+                    <img src="images/piracy.png" alt="It's (not) a Crime" />
+                    <img src="images/blue.png" alt="Blue the Cat" />
+                    <img src="images/getaway.png" alt="Black Monday" />
+                    <img src="images/aphextwinhl2.png" alt="Come on we all thought the same" />
+                </div>
                 <div id="main">
                     <div id="main-top">
                         <ul>
@@ -124,9 +132,9 @@ pub fn app() -> Html {
                     <ul id="main-bottom">
                         <li class="text-yellow">{ "Designed^Coded^Debugged^Deployed" }</li>
                         <li class="text-yellow">{ "by Thadah/aichan in The North Of Basque Country." }</li>
-                        <li class="text-red">{ "\"Mi capacidad de atención es menor que la de uno de esos peces" }</li>
-                        <li class="text-red">{ "de pecera... Ya sabes, los naranjas.\"" }</li>
-                        <li class="text-white">{ "NY4κOTecH - Copyleft Thadah/aichan Test Software 2024." }</li>
+                        <li class="text-red">{ "\"Mi capacidad de atención es menor que la de uno de esos" }</li>
+                        <li class="text-red">{ "peces de pecera... Ya sabes, los naranjas.\"" }</li>
+                        <li class="text-white text-author">{ "NY4κOTecH - Copyleft Thadah/aichan Test Soft. 2024." }</li>
                     </ul>
                 </div>
                 <div id="right-text" class="text-white">{ "V/Vm - \"HelpAphexTwin4.O\" HATO4" }</div>
