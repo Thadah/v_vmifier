@@ -5,6 +5,7 @@ use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::spawn_local;
 use web_sys::HtmlInputElement;
 use yew::prelude::*;
+use rand::Rng;
 
 #[function_component(App)]
 pub fn app() -> Html {
@@ -61,7 +62,7 @@ pub fn app() -> Html {
             }
 
             let mut rng = rand::thread_rng();
-            let randomized_titles: Vec<String> = (0..5) // Generate 5 titles
+            let randomized_titles: Vec<String> = (0..5)
                 .map(|_| {
                     let word1 = wordlist
                         .choose(&mut rng)
@@ -83,46 +84,61 @@ pub fn app() -> Html {
         let user_input = user_input.clone();
         let transformed_output = transformed_output.clone();
         let wordlist = wordlist_state.clone();
-
+    
         Callback::from(move |event: InputEvent| {
             let input: HtmlInputElement = event
                 .target()
                 .unwrap()
                 .unchecked_into::<HtmlInputElement>();
             let value = input.value();
-
+    
             user_input.set(value.clone());
-
+    
             let mut rng = rand::thread_rng();
+    
             let transformed: String = value
                 .chars()
                 .map(|c| {
-                    replacements::REPLACEMENTS
-                        .get(&c)
-                        .and_then(|vec| vec.choose(&mut rng))
-                        .map(|s| s.to_string())
-                        .unwrap_or_else(|| c.to_string())
+                    let mut s = c.to_string();
+                    // Random chance to transform the character
+                    if rng.gen_bool(0.4) {
+                        if let Some(replacements) = replacements::REPLACEMENTS.get(&c) {
+                            // Pick replacement randomly
+                            if let Some(replacement) = replacements.choose(&mut rng) {
+                                s = replacement.to_string();
+                            }
+                        }
+                    }
+                    // Random chance to convert to uppercase
+                    if rng.gen_bool(0.4) {
+                        s = s.to_uppercase();
+                    }
+                    s
                 })
                 .collect();
-
-            // Append random word from the wordlist
+    
+            // Randomly decide to append or prepend a word with a low chance
             let wordlist = (*wordlist).clone();
-            if wordlist.is_empty() {
-                log!("Wordlist is empty. Cannot append random suffix.");
-                transformed_output.set(transformed.clone());
-                return;
+            let mut final_transformed = transformed.clone();
+            
+            // Since we don't want to always append or prepend, we give a lower chance
+            if !wordlist.is_empty() && rng.gen_bool(0.2) {
+                let random_word = wordlist
+                    .choose(&mut rng)
+                    .unwrap_or(&"word".to_string())
+                    .clone();
+    
+                if rng.gen_bool(0.5) {
+                    final_transformed = format!("{} {}", random_word, final_transformed);
+                } else {
+                    final_transformed = format!("{} {}", final_transformed, random_word);
+                }
             }
-
-            let random_suffix = wordlist
-                .choose(&mut rng)
-                .unwrap_or(&"suffix".to_string())
-                .clone();
-            let final_transformed = format!("{} {}", transformed, random_suffix);
-
+    
             transformed_output.set(final_transformed);
         })
     };
-
+    
     html! {
         <main>
             <h1>{ "V/Vm-ifier with Dynamic Wordlist" }</h1>
