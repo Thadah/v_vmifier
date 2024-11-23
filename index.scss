@@ -1,8 +1,14 @@
 @font-face {
-  font-family: 'OCRAExtended';
-  src: url('fonts/OCRAExtended.ttf') format('truetype');
+  font-family: "OCRAExtended";
+  src:  url("https://g.webfontfree.com/Code/EOT/e2/bd/e2bdaf99c2028cd98db622ed713117e5.eot");
+  src:  url("https://g.webfontfree.com/Code/EOT/e2/bd/e2bdaf99c2028cd98db622ed713117e5.eot?#iefix") format("embedded-opentype"),
+        url("https://g.webfontfree.com/Code/WOFF/e2/bd/e2bdaf99c2028cd98db622ed713117e5.woff") format("woff"),
+        url("https://g.webfontfree.com/Code/WOFF2/e2/bd/e2bdaf99c2028cd98db622ed713117e5.woff2") format("woff2"),
+        url("https://g.webfontfree.com/Data/TTF/e2/bd/e2bdaf99c2028cd98db622ed713117e5.ttf") format("truetype"),
+        url("https://g.webfontfree.com/Code/SVG/e2/bd/e2bdaf99c2028cd98db622ed713117e5.svg#OCRAExtended") format("svg");
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 html,
@@ -32,6 +38,15 @@ p {
   margin: 0;
 }
 
+img {
+  max-width: 60px;
+  margin-bottom: 13px;
+}
+
+#images {
+  margin-top: 2px;
+}
+
 #album {
   background-color: #15120d;
   height: 466px;
@@ -45,11 +60,12 @@ p {
 
 #left-text,
 #right-text {
-  width: 26px;
+  width: 24px;
   text-align: center;
+  align-content: center;
   writing-mode: vertical-rl;
   font-family: 'OCRAExtended', monospace;
-  font-size: 14px;
+  font-size: 13px;
   color: #ffffff;
 }
 
@@ -57,7 +73,7 @@ p {
   border-right: 1px dotted #ffffff8a;
 }
 
-#left-text > p {
+#left-text>p {
   transform: scale(-1, -1);
 }
 
@@ -65,8 +81,12 @@ p {
   border-left: 0.5px dotted #ffffff8a;
 }
 
+#images {
+  width: 95px;
+}
+
 #main {
-  width: 548px;
+  width: 457px;
   height: 466px;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
@@ -77,30 +97,43 @@ p {
 #main-top {
   grid-row: 1/5;
   height: 100%;
+  margin-top: -8px;
+}
+
+#main-bottom {
+  grid-row: 6;
+}
+
+#main-bottom > li {
+  margin-top: -2px;
 }
 
 .text-white {
-  color: #ffffff;
+  color: #ffffffbe;
 }
 
 .text-red {
-  color: #ff4d4d; /* Example red color */
+  color: #db2232;
 }
 
 .text-green {
-  color: #4dff4d; /* Example green color */
+  color: #6abe87;
 }
 
 .text-yellow {
-  color: #ffff4d; /* Example yellow color */
+  color: #d3c945;
 }
 
 .text-title {
-  font-size: 25px;
+  font-size: 32px;
 }
 
 .text-subtitle {
   font-size: 18px;
+}
+
+.text-author {
+  font-size: 14px;
 }
 
 button {
@@ -128,51 +161,54 @@ button:hover:not(:disabled) {
 }
 
 input[type="text"] {
-  background-color: #1a1a1a; /* Dark background */
-  color: #ffffff; /* White text */
-  border: 2px solid #ffffff8a; /* Semi-transparent white border */
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 2px solid #ffffff8a;
   padding: 10px;
-  margin: 10px 0; /* Space above and below the input */
-  border-radius: 5px; /* Rounded corners */
+  margin: 10px 0;
+  /* Space above and below the input */
+  border-radius: 5px;
   font-size: 1rem;
-  width: 300px; /* Set a fixed width */
+  width: 300px;
   transition: border-color 0.3s;
 }
 
 input[type="text"]:focus {
-  border-color: #ffffff; /* Highlight border on focus */
-  outline: none; /* Remove default outline */
+  border-color: #ffffff;
+  outline: none;
 }
 
-/* Optional: Style the list of song titles */
 ul {
-  list-style-type: none; /* Remove default bullets */
+  list-style-type: none;
+  /* Remove default bullets */
   padding: 0;
-  margin-top: 20px; /* Space above the list */
   margin: 0;
 }
 
 li {
   color: #ffffff;
-  margin: 5px 0;
-  border-radius: 4px;
   text-align: center;
   font-family: 'OCRAExtended', monospace;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .numbered-list {
-  counter-reset: song; /* Initialize the counter */
-  list-style: none;    /* Remove default list styling */
-  padding: 0;          /* Remove default padding */
-  margin: 0;           /* Remove default margin */
+  counter-reset: song;
+  /* Initialize the counter */
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .numbered-list li {
-  counter-increment: song; /* Increment the counter for each list item */
-  position: relative;      /* Position relative to allow absolute positioning of the counter */
+  counter-increment: song;
+  /* Increment the counter for each list item */
+  position: relative;
+  min-height: 17.3px;
+  max-height: 17.3px;
 }
 
 .numbered-list li::before {
-  content: counter(song, decimal-leading-zero) " - "; /* Format the counter with leading zeros and a dash */
+  content: counter(song, decimal-leading-zero) " - ";
+  /* Format the counter with leading zeros and a dash */
 }
