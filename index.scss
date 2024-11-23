@@ -44,8 +44,102 @@ img {
   margin-bottom: 13px;
 }
 
+
+button {
+  width: fit-content;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 2px solid #ffffff8a;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+button:disabled {
+  background-color: #333333;
+  border-color: #555555;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #444444;
+  border-color: #ffffff;
+}
+
+input {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border: 2px solid #ffffff8a;
+  padding: 10px;
+  margin: 10px 0;
+  /* Space above and below the input */
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 300px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #ffffff;
+  outline: none;
+}
+
+ul {
+  list-style-type: none;
+  /* Remove default bullets */
+  padding: 0;
+  margin: 0;
+}
+
+li, #output {
+  color: #ffffff;
+  text-align: center;
+  font-family: 'OCRAExtended', monospace;
+  font-size: 13px;
+}
+
 #images {
   margin-top: 2px;
+}
+
+#input-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 600px;
+}
+
+#input-tooltips {
+  grid-column: 1/4;
+  display: flex;
+  flex-direction: column;
+}
+
+#input-tooltips > p {
+  text-align: left;
+  height: 43px;
+  margin-block: 1px;
+}
+
+#input-fields {
+  grid-column: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+#input-fields > input{
+  width: 70%;
+  margin-block: 1px;
+}
+
+#input-generator {
+  grid-column: 5;
+}
+
+#input-generator > button {
+  height: 100%;
 }
 
 #album {
@@ -137,62 +231,6 @@ img {
   font-size: 14px;
 }
 
-button {
-  width: fit-content;
-  background-color: #1a1a1a;
-  color: #ffffff;
-  border: 2px solid #ffffff8a;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s, border-color 0.3s;
-}
-
-button:disabled {
-  background-color: #333333;
-  border-color: #555555;
-  cursor: not-allowed;
-}
-
-button:hover:not(:disabled) {
-  background-color: #444444;
-  border-color: #ffffff;
-}
-
-input[type="text"] {
-  background-color: #1a1a1a;
-  color: #ffffff;
-  border: 2px solid #ffffff8a;
-  padding: 10px;
-  margin: 10px 0;
-  /* Space above and below the input */
-  border-radius: 5px;
-  font-size: 1rem;
-  width: 300px;
-  transition: border-color 0.3s;
-}
-
-input[type="text"]:focus {
-  border-color: #ffffff;
-  outline: none;
-}
-
-ul {
-  list-style-type: none;
-  /* Remove default bullets */
-  padding: 0;
-  margin: 0;
-}
-
-li, #output {
-  color: #ffffff;
-  text-align: center;
-  font-family: 'OCRAExtended', monospace;
-  font-size: 13px;
-}
-
 .numbered-list {
   counter-reset: song;
   /* Initialize the counter */
@@ -214,8 +252,9 @@ li, #output {
   /* Format the counter with leading zeros and a dash */
 }
 
-#user-input {
+.user-input {
   margin: 5px;
+  width: fit-content;
 }
 
 #output {
