@@ -1,0 +1,15 @@
+services:
+  v_vmifier:
+    container_name: v_vmifier
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: v_vmifier:latest
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
