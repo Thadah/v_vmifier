@@ -61,20 +61,7 @@ pub fn app() -> Html {
                 return;
             }
 
-            let mut rng = rand::thread_rng();
-            let randomized_titles: Vec<String> = (0..5)
-                .map(|_| {
-                    let word1 = wordlist
-                        .choose(&mut rng)
-                        .unwrap_or(&"default".to_string())
-                        .clone();
-                    let word2 = wordlist
-                        .choose(&mut rng)
-                        .unwrap_or(&"title".to_string())
-                        .clone();
-                    format!("{} {}", word1, word2)
-                })
-                .collect();
+            let randomized_titles = create_randomized_songlist(&wordlist);
             song_titles.set(randomized_titles);
         })
     };
@@ -94,54 +81,21 @@ pub fn app() -> Html {
     
             user_input.set(value.clone());
     
-            let mut rng = rand::thread_rng();
-    
-            let transformed: String = value
-                .chars()
-                .map(|c| {
-                    let mut s = c.to_string();
-                    // Random chance to transform the character
-                    if rng.gen_bool(0.4) {
-                        if let Some(replacements) = replacements::REPLACEMENTS.get(&c) {
-                            // Pick replacement randomly
-                            if let Some(replacement) = replacements.choose(&mut rng) {
-                                s = replacement.to_string();
-                            }
-                        }
-                    }
-                    // Random chance to convert to uppercase
-                    if rng.gen_bool(0.4) {
-                        s = s.to_uppercase();
-                    }
-                    s
-                })
-                .collect();
-    
             // Randomly decide to append or prepend a word with a low chance
             let wordlist = (*wordlist).clone();
-            let mut final_transformed = transformed.clone();
+            let mut final_string = value.clone();
             
-            // Since we don't want to always append or prepend, we give a lower chance
-            if !wordlist.is_empty() && rng.gen_bool(0.2) {
-                let random_word = wordlist
-                    .choose(&mut rng)
-                    .unwrap_or(&"word".to_string())
-                    .clone();
+            final_string = add_random_string(final_string, &wordlist);
+
+            let transformed = transform_text(&final_string);
     
-                if rng.gen_bool(0.5) {
-                    final_transformed = format!("{} {}", random_word, final_transformed);
-                } else {
-                    final_transformed = format!("{} {}", final_transformed, random_word);
-                }
-            }
-    
-            transformed_output.set(final_transformed);
+            transformed_output.set(transformed);
         })
     };
     
     html! {
         <main>
-            <h1>{ "V/Vm-ifier with Dynamic Wordlist" }</h1>
+            <h1>{ "V/Vm-ifier" }</h1>
 
             // Indicate loading status
             if !*is_wordlist_loaded {
@@ -164,7 +118,7 @@ pub fn app() -> Html {
                             <li class="text-red text-subtitle">{ "\"HelpAphexTwin4.0\"" }</li>
                         </ul>
                         <ol class="numbered-list">
-                            { for (*song_titles).iter().map(|title| html! { <li>{ title }</li> }) }
+                            { for (*song_titles).iter().map(|title| html! { <li class="text-green">{ title }</li> }) }
                         </ol>
                     </div>
                     <ul id="main-bottom">
@@ -187,4 +141,58 @@ pub fn app() -> Html {
             <p>{ "Transformed output: " }{ (*transformed_output).clone() }</p>
         </main>
     }
+}
+
+fn create_randomized_songlist(wordlist: &Vec<String>) -> Vec<String> {
+    let mut rng = rand::thread_rng();
+    let randomized_titles: Vec<String> = (0..20)
+        .map(|_| {
+            let word1 = wordlist
+                .choose(&mut rng)
+                .unwrap_or(&"default".to_string())
+                .clone();
+            let word2 = wordlist
+                .choose(&mut rng)
+                .unwrap_or(&"title".to_string())
+                .clone();
+            format!("{} {}", transform_text(&word1), transform_text(&word2))
+        })
+        .collect();
+    randomized_titles
+}
+
+fn transform_text(input: &String) -> String {
+    let mut rng = rand::thread_rng();
+    let transformed: String = input.chars().map(|c| {
+        let mut s = c.to_string();
+        // Random chance to transform the character
+        if rng.gen_bool(0.4) {
+            if let Some(replacements) = replacements::REPLACEMENTS.get(&c) {
+                // Pick replacement randomly
+                if let Some(replacement) = replacements.choose(&mut rng) {
+                    s = replacement.to_string();
+                }
+            }
+        }
+        // Random chance to convert to uppercase
+        if rng.gen_bool(0.4) {
+            s = s.to_uppercase();
+        }
+        s
+    }).collect();
+    transformed
+}
+
+fn add_random_string(input: String, wordlist: &Vec<String>) -> String {
+    let mut rng = rand::thread_rng();
+    let mut result = input.clone();
+    if rng.gen_bool(0.2) {
+        let random_word = wordlist.choose(&mut rng).unwrap_or(&"word".to_string()).clone();
+        if rng.gen_bool(0.5) {
+            result = format!("{} {}", random_word, input);
+        } else {
+            result = format!("{} {}", input, random_word);
+        }
+    }
+    result
 }
