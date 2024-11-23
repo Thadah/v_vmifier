@@ -66,7 +66,7 @@ pub fn app() -> Html {
 
             <div id="album">
                 <div id="left-text">
-                    <p class="text-white">{ "V/Vm Test Records : Made In Northern England." }</p>
+                    <p class="text-white">{ "Thadah/aichan: Made In The North Of Basque Country." }</p>
                 </div>
                 <div id="images">
                     <img src="images/belce.png" alt="Belce the Cat" />
@@ -80,7 +80,7 @@ pub fn app() -> Html {
                     <div id="main-top">
                         <ul>
                             <li class="text-red text-title">{ "V/Vm" }</li>
-                            <li class="text-red text-subtitle">{ "\"HelpAphexTwin4.0\"" }</li>
+                            <li class="text-red text-subtitle">{ "\"Mi©#iBLUeBoni†o1.0\"" }</li>
                         </ul>
                         <ol class="numbered-list">
                             { for (*song_titles).iter().map(|title| html! { <li class="text-green">{ title }</li> }) }
@@ -94,7 +94,7 @@ pub fn app() -> Html {
                         <li class="text-white text-author">{ "NY4κOTecH - Copyleft Thadah/aichan Test Soft. 2024." }</li>
                     </ul>
                 </div>
-                <div id="right-text" class="text-white">{ "V/Vm - \"HelpAphexTwin4.O\" HATO4" }</div>
+                <div id="right-text" class="text-white">{ "Thadah/aichan - \"Mi©#iBLUeBoni†o1.0\" NY4κOTecH" }</div>
             </div>
             
             <input class="user-input" type="text" placeholder="Enter text to V/Vm-ify" oninput={transform_input.clone()}/>
