@@ -120,16 +120,38 @@ pub fn app() -> Html {
             <button onclick={generate_titles} disabled={!*is_wordlist_loaded}>
                 { "Generate Randomized Song Titles" }
             </button>
-            
-            <ul>
-                { for (*song_titles).iter().map(|title| html! { <li>{ title }</li> }) }
-            </ul>
+
+            <div id="album">
+                <div id="left-text">
+                    <p class="text-white">{ "V/Vm Test Records : Made In Northern England." }</p>
+                </div>
+                <div id="main">
+                    <div id="main-top">
+                        <ul>
+                            <li class="text-red text-title">{ "V/Vm" }</li>
+                            <li class="text-red text-subtitle">{ "\"HelpAphexTwin4.0\"" }</li>
+                        </ul>
+                        <ol class="numbered-list">
+                            { for (*song_titles).iter().map(|title| html! { <li>{ title }</li> }) }
+                        </ol>
+                    </div>
+                    <ul id="main-bottom">
+                        <li class="text-yellow">{ "Designed^Coded^Debugged^Deployed" }</li>
+                        <li class="text-yellow">{ "by Thadah/aichan in The North Of Basque Country." }</li>
+                        <li class="text-red">{ "\"Mi capacidad de atención es menor que la de uno de esos peces" }</li>
+                        <li class="text-red">{ "de pecera... Ya sabes, los naranjas.\"" }</li>
+                        <li class="text-white">{ "NY4κOTecH - Copyleft Thadah/aichan Test Software 2024." }</li>
+                    </ul>
+                </div>
+                <div id="right-text" class="text-white">{ "V/Vm - \"HelpAphexTwin4.O\" HATO4" }</div>
+            </div>
             
             <input
                 type="text"
                 placeholder="Enter text to V/Vm-ify"
                 oninput={transform_input.clone()}
             />
+
             <p>{ "Transformed output: " }{ (*transformed_output).clone() }</p>
         </main>
     }
