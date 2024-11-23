@@ -1,0 +1,79 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # Ensure that tags are fetched for version extraction
+          fetch-depth: 0
+
+      # 2. Determine if the build is triggered by a tag
+      - name: Determine build context
+        id: context
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "is_tag=true" >> $GITHUB_ENV
+            TAG_NAME=${GITHUB_REF#refs/tags/}
+            echo "VERSION=${TAG_NAME}" >> $GITHUB_ENV
+            echo "Build triggered by tag: $TAG_NAME"
+          else
+            echo "is_tag=false" >> $GITHUB_ENV
+            # Extract version from Cargo.toml as fallback
+            VERSION=$(grep ^version Cargo.toml | sed 's/version = "//;s/"//')
+            echo "VERSION=${VERSION}" >> $GITHUB_ENV
+            echo "Build triggered by branch: main, using Cargo.toml version: $VERSION"
+          fi
+
+      # 3. Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # 4. Cache Docker layers (optional but recommended for faster builds)
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
+      # 5. Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 6. Build and push the Docker image with appropriate tags
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+          tags: |
+            thadah/v_vmifier:latest
+            thadah/v_vmifier:${{ env.VERSION }}
+
+      # 7. Update cache
+      - name: Move cache
+        if: always()
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
