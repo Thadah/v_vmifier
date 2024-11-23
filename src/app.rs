@@ -140,13 +140,12 @@ pub fn app() -> Html {
                 <div id="right-text" class="text-white">{ "V/Vm - \"HelpAphexTwin4.O\" HATO4" }</div>
             </div>
             
-            <input
-                type="text"
-                placeholder="Enter text to V/Vm-ify"
-                oninput={transform_input.clone()}
-            />
+            <input id="user-input" type="text" placeholder="Enter text to V/Vm-ify" oninput={transform_input.clone()}/>
 
-            <p>{ "Transformed output: " }{ (*transformed_output).clone() }</p>
+            <p>{ "Transformed output: " }</p>
+            <div id="output">
+                <p id="transformed-output" class="text-green">{ (*transformed_output).clone() }</p>
+            </div>
         </main>
     }
 }

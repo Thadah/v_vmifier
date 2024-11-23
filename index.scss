@@ -39,6 +39,7 @@ p {
 }
 
 img {
+  height: 60px;
   max-width: 60px;
   margin-bottom: 13px;
 }
@@ -54,7 +55,7 @@ img {
   text-align: center;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-block: 20px;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
 
@@ -185,7 +186,7 @@ ul {
   margin: 0;
 }
 
-li {
+li, #output {
   color: #ffffff;
   text-align: center;
   font-family: 'OCRAExtended', monospace;
@@ -211,4 +212,18 @@ li {
 .numbered-list li::before {
   content: counter(song, decimal-leading-zero) " - ";
   /* Format the counter with leading zeros and a dash */
+}
+
+#user-input {
+  margin: 5px;
+}
+
+#output {
+  background-color: #15120d;
+  width: 600px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-block: 20px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
