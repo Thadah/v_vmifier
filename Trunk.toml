@@ -1,35 +1,10 @@
-# Trunk.toml
-
 # Specify the build configuration
 [build]
-# Define the output directory for the built files
-# By default, Trunk uses "dist", so this is optional unless you want to change it
 output = "dist"
-
-# Define copy operations to include static assets like fonts
-[[copy]]
-# Source directory relative to the project root
-source = "fonts"
-# Destination directory in the output folder
-destination = "fonts"
 
 # Configuration for the development server
 [serve]
-# Specify the port (optional, default is 8080)
 port = 8082
-
-# Configure MIME types to ensure fonts are served correctly
-[serve.mime_types]
-# Associate the .ttf extension with the correct MIME type
-".ttf" = "font/ttf"
-# (Optional) If you decide to use other font formats like WOFF or WOFF2, add them here
-".woff" = "font/woff"
-".woff2" = "font/woff2"
-
-# Add CORS headers for font files
-[serve.headers]
-# Apply headers to all font files in the /fonts/ directory
-"Access-Control-Allow-Origin" = "*"
 
 # (Optional) Additional static assets can be copied similarly
 [[copy]]
