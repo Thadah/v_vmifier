@@ -8,19 +8,15 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/thadah/v_vmifier">
-    <img src="resources/images/v_vmlogo.png" alt="Logo" width="160" height="160">
-  </a>
-
   <h1 align="center">V/Vm-ifier</h1>
 
   <p align="center">
     A string randomizer inspired by V/Vm HelpAphexTwin4.0 that creates random songlists or transforms any input.
     <br />
     <br />
-    <a href="https://github.com/thadah/v_vmifier/issues">Report Bug or </a>
+    <a href="https://git.prisma.moe/Thadah/v_vmifier/issues">Report Bug or </a>
     ·
-    <a href="https://github.com/thadah/v_vmifier/issues">Request Feature</a>
+    <a href="https://git.prisma.moe/Thadah/v_vmifier/issues">Request Feature</a>
   </p>
 </div>
 
@@ -62,7 +58,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 <div align="center">
-    <a href="https://github.com/thadah/v_vmifier">
+    <a href="https://git.prisma.moe/Thadah/v_vmifier">
         <img src="resources/images/v_vmproject.png" alt="Logo" width="400" height="500">
     </a>
 </div>
@@ -103,7 +99,7 @@ To get a local copy up and running follow these simple steps.
 
 1. Install the WebAssembly target: `rustup target add wasm32-unknown-unknown`
 2. Install Trunk by running `cargo install --locked trunk`
-4. Clone the repository to your local machine using the following command: `git clone https://github.com/thadah/v_vmifier.git`
+4. Clone the repository to your local machine using the following command: `git clone https://git.prisma.moe/Thadah/v_vmifier.git`
 4. Navigate to the project directory: `cd v_vmifier`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -178,7 +174,7 @@ Distributed under the European Union Public License v1.2. See `LICENSE` for more
 Thadah D. Denyse - thadahdenyse@protonmail.com
 Aitor Astorga Saez de Vicuña - a.astorga.sdv@protonmail.com
 
-Project Link: [https://github.com/thadah/v_vmifier](https://github.com/thadah/v_vmifier)
+Project Link: [https://git.prisma.moe/Thadah/v_vmifier](https://git.prisma.moe/Thadah/v_vmifier)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -204,12 +200,12 @@ Thanks to this awesome projects for their contributions:
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/thadah/v_vmifier.svg?style=for-the-badge
-[contributors-url]: https://github.com/thadah/v_vmifier/graphs/contributors
+[contributors-url]: https://git.prisma.moe/Thadah/v_vmifier/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/thadah/v_vmifier.svg?style=for-the-badge
-[forks-url]: https://github.com/thadah/v_vmifier/network/members
+[forks-url]: https://git.prisma.moe/Thadah/v_vmifier/network/members
 [stars-shield]: https://img.shields.io/github/stars/thadah/v_vmifier.svg?style=for-the-badge
-[stars-url]: https://github.com/thadah/v_vmifier/stargazers
+[stars-url]: https://git.prisma.moe/Thadah/v_vmifier/stargazers
 [issues-shield]: https://img.shields.io/github/issues/thadah/v_vmifier.svg?style=for-the-badge
-[issues-url]: https://github.com/thadah/v_vmifier/issues
+[issues-url]: https://git.prisma.moe/Thadah/v_vmifier/issues
 [license-shield]: https://img.shields.io/github/license/thadah/v_vmifier.svg?style=for-the-badge
-[license-url]: https://github.com/thadah/v_vmifier/blob/main/LICENSE
+[license-url]: https://git.prisma.moe/Thadah/v_vmifier/blob/main/LICENSE
