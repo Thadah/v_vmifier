@@ -1,3 +1,19 @@
+<h2 align="center">⚠️ THIS IS A MIRROR ⚠️</h2>
+
+> [!WARNING]  
+> Hi there! This is a **read-only mirror**, automatically synced from our Forgejo instance.  
+>   
+> - 🛠️ All development happens on the primary Forgejo repository  
+> - 💬 You’re welcome to open Issues, Discussions, or even PRs here if it’s convenient — just know they may not be acted on directly, since the sync is one-way  
+>   
+> For the best chance of your contributions being merged, or for quicker responses, please head over to the main Forgejo repo.  
+>   
+> - Original repo: https://git.prisma.moe/thadah/v_vmifier
+>   
+> — *Self-hosting 4 the win!*
+
+---
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -209,3 +225,8 @@ Thanks to this awesome projects for their contributions:
 [issues-url]: https://git.prisma.moe/Thadah/v_vmifier/issues
 [license-shield]: https://img.shields.io/github/license/thadah/v_vmifier.svg?style=for-the-badge
 [license-url]: https://git.prisma.moe/Thadah/v_vmifier/blob/main/LICENSE
+
+---
+
+> [!WARNING]
+> **🔗 This repository is automatically mirrored from a private Forgejo instance.**
